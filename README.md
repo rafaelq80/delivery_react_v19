@@ -1,73 +1,124 @@
-# React + TypeScript + Vite
+# Projeto Delivery de Alimentos - Frontend 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<br />
 
-Currently, two official plugins are available:
+<div align="center">
+    <img src="https://i.imgur.com/AzshGmS.png" title="source: imgur.com" width="50%"/>
+</div>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<br /><br />
 
-## React Compiler
+## 1. Descrição
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+O Projeto Delivery de Alimentos é um **frontend** desenvolvido com o **Vite** e o **React** para consumir uma API de Delivery de Alimentos, desenvolvida em **NestJS**. A aplicação permite o gerenciamento dos **Usuários**, **Produtos** e **Categorias**, além de utilizar autenticação por usuário e senha, com validação de token **JWT** para proteger as rotas e garantir a segurança da aplicação.
 
-## Expanding the ESLint configuration
+### 1.1. Principais Funcionalidades
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Autenticação por Usuário e Senha**: Login seguro para controlar o acesso dos usuários.
+- **Validação de Token JWT**: Proteção de rotas e verificação de token para acessar recursos privados.
+- **CRUD de Usuários**: Criação, leitura e atualização de perfis de usuários.
+- **CRUD de Produtos**: Gerenciamento dos produtos.
+- **CRUD de Categorias**: Gerenciamento das categorias.
+- **Indicação de Produtos Saudáveis via IA**.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+------
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 2. Tecnologias
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Item                         | Descrição  |
+| ---------------------------- | ---------- |
+| **Servidor**                 | Node JS    |
+| **Linguagem de programação** | TypeScript |
+| **Biblioteca**               | React JS   |
+| **Build**                    | Vite       |
+| **Estilização**              | Tailwind   |
+| **Consumo de API**           | Axios      |
+
+---
+
+## 3. Pré-requisitos
+
+Antes de iniciar, certifique-se de ter as seguintes ferramentas instaladas:
+
+- [Node.js](https://nodejs.org/) (v16+)
+- Backend da API NestJS rodando ([Repositório da API](https://github.com/rafaelq80/delivery-nest))
+
+---
+
+## 4. Instalação - Ambiente Local
+
+### 4.1. Clonando o repositório
+
+```bash
+git clone https://github.com/usuario/delivery_react_v19 .git
+cd delivery_react_v19 
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 4.2. Instalando as dependências
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Utilize o comando abaixo para instalar todas as bibliotecas através do npm:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
+
+### 4.3. Configuração do ambiente
+
+A URL da API NestJS deve estar apontando para o endereço abaixo:
+
+```bash
+http://localhost:4000
+```
+
+### 4.4. Executando o projeto
+
+Inicie o servidor de desenvolvimento com o npm:
+
+```bash
+npm run dev
+```
+
+A aplicação estará disponível no endereço: `http://localhost:5173`
+
+---
+
+## 5. Estrutura do Projeto
+
+```plaintext
+src/
+│
+├── components/       # Componentes reutilizáveis
+├── contexts/         # Gerenciamento de estado global (ex: autenticação)
+├── models/           # Estrutura de dados da aplicação-
+├── pages/            # Páginas da aplicação
+├── services/         # Integração com a API (requisições HTTP)
+├── utils/            # Funções auxiliares (alerts)
+└── App.tsx           # Componente principal da aplicação
+```
+
+---
+
+## 6. Autenticação e Validação de Token JWT
+
+### Fluxo de Autenticação
+
+1. O usuário realiza o login com **e-mail** e **senha**.
+2. A aplicação faz uma requisição para a API, que retorna um token **JWT**.
+3. O token é armazenado na **Context API** para uso em futuras requisições autenticadas.
+4. Nas rotas protegidas, o token é validado antes do acesso aos recursos.
+
+### Controle de Autenticação
+
+- Se o token expirar ou for inválido, o usuário será redirecionado para a página de login.
+
+------
+
+## 7. Implementações Futuras
+
+- [ ] Implementar um Carrossel de imagens
+- [ ] Implementar o Simulador de Carrinho de Compras
+- [ ] Implementar a função Curtir produtos
+- [ ] Implementar a Busca de produtos na página inicial
+- [ ] Implementar a Atualização do Perfil
+- [ ] Implementar o Formulário de Contato
+- [x] Implementar a Listagem de Produtos por Categoria
